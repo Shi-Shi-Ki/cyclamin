@@ -1,0 +1,119 @@
+{
+  "locale": "ja",
+  "title": {
+    "ja": "社内研修 202602xx"
+  },
+  "description": {
+    "ja": "中途採用向けの課題です"
+  },
+  "pages": [
+    {
+      "name": "ページ1",
+      "title": {
+        "ja": "課題の回答"
+      },
+      "description": {
+        "ja": "社内研修の回答フォームです"
+      },
+      "elements": [
+        {
+          "type": "text",
+          "name": "質問1",
+          "title": {
+            "ja": "問題1"
+          },
+          "description": {
+            "ja": "〜について100字以内に回答してください"
+          },
+          "correctAnswer": "社内研修の研修用として試験的につ作成しました",
+          "isRequired": true,
+          "validators": [
+            {
+              "type": "text",
+              "minLength": 10,
+              "maxLength": 100
+            }
+          ],
+          "placeholder": {
+            "ja": "ここに回答内容を入力します"
+          }
+        },
+        {
+          "type": "text",
+          "name": "質問2",
+          "title": {
+            "ja": "問題2"
+          },
+          "description": {
+            "ja": "〜について10文字以上、200字以内に回答してください"
+          },
+          "correctAnswer": "回答フォームについてはさまざまな形式がある",
+          "isRequired": true,
+          "validators": [
+            {
+              "type": "text",
+              "minLength": 10,
+              "maxLength": 200
+            }
+          ],
+          "placeholder": {
+            "ja": "ここに回答内容を入力します"
+          }
+        },
+        {
+          "type": "tagbox",
+          "name": "質問3",
+          "title": {
+            "ja": "問題3"
+          },
+          "description": {
+            "ja": "〜に該当するものを全て選択してください"
+          },
+          "correctAnswer": ["Item 1", "Item 3", "Item 5"],
+          "isRequired": true,
+          "choices": ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]
+        },
+        {
+          "type": "boolean",
+          "name": "質問4",
+          "title": {
+            "ja": "質問"
+          },
+          "description": {
+            "ja": "この選択肢で以降の設問内容が変わります!"
+          },
+          "isRequired": true,
+          "swapOrder": true
+        },
+        {
+          "type": "checkbox",
+          "name": "質問5",
+          "visibleIf": "{質問4} = true",
+          "title": {
+            "ja": "問題5"
+          },
+          "description": {
+            "ja": "これは\"はい\"を選んだ人向けの質問です"
+          },
+          "correctAnswer": ["Item 3"],
+          "choices": ["Item 1", "Item 2", "Item 3"]
+        },
+        {
+          "type": "rating",
+          "name": "質問6",
+          "visibleIf": "{質問4} = false",
+          "title": {
+            "ja": "問題6"
+          },
+          "description": {
+            "ja": "これは\"いいえ\"を選んだ人向けです"
+          },
+          "correctAnswer": 2
+        }
+      ]
+    }
+  ],
+  "showCompletePage": false,
+  "headerView": "advanced",
+  "videoUrl": "dQw4w9WgXcQ"
+}
