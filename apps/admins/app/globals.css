@@ -1,5 +1,7 @@
 @import "tailwindcss";
-@plugin "daisyui";
+@import "../../../packages/tailwind-config/shared-theme.css";
+@source "../";
+@source "../../../packages/ui/src";
 
 :root {
   --background: #ffffff;

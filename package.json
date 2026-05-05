@@ -9,8 +9,11 @@
     "check-types": "turbo run check-types"
   },
   "devDependencies": {
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "daisyui": "^5.5.19",
     "prettier": "^3.7.4",
+    "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.4",
     "turbo": "^2.9.8",
     "typescript": "5.9.2"
