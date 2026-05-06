@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import { Home, BookOpen, Award, FileText } from "lucide-react"
 
 export const Sidebar = () => {

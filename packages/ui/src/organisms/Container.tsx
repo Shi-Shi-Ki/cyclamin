@@ -3,7 +3,7 @@
 import { forwardRef } from "react"
 import { cn } from "../../../common/util"
 
-export type IContainer = React.HTMLAttributes<HTMLElement>
+export type IContainer = React.ComponentPropsWithRef<"div">
 
 export const Container = forwardRef<HTMLDivElement, IContainer>(
   ({ className, children, ...props }, ref) => {

@@ -1,11 +1,11 @@
-// apps/users/app/dashboard/page.tsx
-
+import Image from "next/image"
 import { Container } from "@repo/ui/organisms/Container"
 import { Section } from "@repo/ui/organisms/Section"
 import { Card, CardFigure, CardBody, CardTitle, CardActions } from "@repo/ui/molecules/Card"
 import { Badge } from "@repo/ui/atoms/Badge"
 import { Button } from "@repo/ui/atoms/Button"
-import { PlayCircle, AlertCircle, Clock, BookOpen } from "lucide-react"
+import { Accordion } from "@repo/ui/atoms/Accordion"
+import { PlayCircle, AlertCircle, Clock, BookOpen, CheckCircle2 } from "lucide-react"
 
 export default function DashboardPage() {
   return (
@@ -33,11 +33,13 @@ export default function DashboardPage() {
 
           {/* Cardの layout="side" を使って横長のレイアウトを実現 */}
           <Card layout="side" className="w-full bg-base-100 shadow-sm border border-base-200">
-            <CardFigure className="w-1/3 min-w-[240px] hidden sm:block relative">
-              <img
+            <CardFigure className="w-1/3 min-w-60 hidden sm:block relative">
+              <Image
                 src="https://picsum.photos/seed/security/600/400"
                 alt="情報セキュリティ基礎講座"
                 className="absolute inset-0 w-full h-full object-cover"
+                height={600}
+                width={400}
               />
             </CardFigure>
             <CardBody>
@@ -116,10 +118,12 @@ export default function DashboardPage() {
             {/* サンプルカード 1 */}
             <Card className="bg-base-100 shadow-sm hover:shadow-md transition-shadow border border-base-200">
               <CardFigure className="relative w-full aspect-video">
-                <img
+                <Image
                   src="https://picsum.photos/seed/management/400/225"
                   alt="マネジメント研修"
                   className="absolute inset-0 w-full h-full object-cover"
+                  height={255}
+                  width={400}
                 />
               </CardFigure>
               <CardBody className="p-5">
@@ -127,7 +131,7 @@ export default function DashboardPage() {
                   マネジメント
                 </Badge>
                 <CardTitle className="text-lg">新任マネージャー向け 基礎講座</CardTitle>
-                <div className="mt-4 text-sm text-base-content/60 flex items-center gap-4">
+                <div className="mt-auto pt-4 text-sm text-base-content/60 flex items-center gap-4">
                   <span className="flex items-center gap-1">
                     <Clock className="w-4 h-4" /> 2時間30分
                   </span>
@@ -139,14 +143,19 @@ export default function DashboardPage() {
             {/* サンプルカード 2 */}
             <Card className="bg-base-100 shadow-sm hover:shadow-md transition-shadow border border-base-200">
               <CardFigure>
-                <img src="https://picsum.photos/seed/excel/400/225" alt="Excel研修" />
+                <Image
+                  src="https://picsum.photos/seed/excel/400/225"
+                  alt="Excel研修"
+                  height={255}
+                  width={400}
+                />
               </CardFigure>
               <CardBody className="p-5">
                 <Badge color="ghost" className="bg-base-200 w-fit mb-2">
                   実務スキル
                 </Badge>
                 <CardTitle className="text-lg">業務効率化のためのExcelマクロ入門</CardTitle>
-                <div className="mt-4 text-sm text-base-content/60 flex items-center gap-4">
+                <div className="mt-auto pt-4 text-sm text-base-content/60 flex items-center gap-4">
                   <span className="flex items-center gap-1">
                     <Clock className="w-4 h-4" /> 1時間15分
                   </span>
@@ -155,6 +164,42 @@ export default function DashboardPage() {
               </CardBody>
             </Card>
           </div>
+        </Section>
+
+        <Section>
+          <Accordion
+            summary={
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-base-content/60" />
+                終了したコース
+              </div>
+            }
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-2">
+              <Card className="bg-base-100 shadow-sm hover:shadow-md transition-shadow border border-base-200">
+                <CardFigure>
+                  <Image
+                    src="https://picsum.photos/seed/picsum/400/225"
+                    alt="ロジカルシンキング"
+                    height={255}
+                    width={400}
+                  />
+                </CardFigure>
+                <CardBody className="p-5">
+                  <Badge color="ghost" className="bg-base-200 w-fit mb-2">
+                    実務スキル
+                  </Badge>
+                  <CardTitle className="text-lg">初学者向け ロジカルシンキング思考</CardTitle>
+                  <div className="mt-auto pt-4 text-sm text-base-content/60 flex items-center gap-4">
+                    <span className="flex items-center gap-1">
+                      <Clock className="w-4 h-4" /> 2時間30分
+                    </span>
+                    <span>全8レクチャー</span>
+                  </div>
+                </CardBody>
+              </Card>
+            </div>
+          </Accordion>
         </Section>
       </Container>
     </main>
