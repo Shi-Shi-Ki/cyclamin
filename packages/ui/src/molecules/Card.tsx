@@ -2,12 +2,13 @@
 
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
+import { cn } from "../../../common/util"
 
 // ==========================================
-// 1. Card (外枠のコンテナ)
-// DaisyUIの .card-bordered や .card-side (横並び) を管理
+// 1. Card
+// ★ overflow-hidden を追加し、画像がカードの角から飛び出すのを防ぎます
 // ==========================================
-const cardVariants = cva("card bg-base-100", {
+const cardVariants = cva("card bg-base-100 overflow-hidden", {
   variants: {
     variant: {
       default: "shadow-xl",
@@ -16,8 +17,8 @@ const cardVariants = cva("card bg-base-100", {
     },
     layout: {
       normal: "",
-      compact: "card-compact", // 余白が狭くなる
-      side: "card-side", // 画像とテキストが横並びになる
+      compact: "card-compact",
+      side: "card-side",
     },
   },
   defaultVariants: {
@@ -31,45 +32,48 @@ export interface ICard
 
 export const Card = React.forwardRef<HTMLDivElement, ICard>(
   ({ className, variant, layout, ...props }, ref) => (
-    <div ref={ref} className={cardVariants({ variant, layout, className })} {...props} />
+    // ★ cnを使って安全にクラスを結合する
+    <div ref={ref} className={cn(cardVariants({ variant, layout }), className)} {...props} />
   )
 )
 Card.displayName = "Card"
 
 // ==========================================
-// 2. CardFigure (画像のラッパー)
+// 2. CardFigure
 // ==========================================
 export const CardFigure = React.forwardRef<HTMLElement, React.ComponentPropsWithRef<"figure">>(
-  ({ className, ...props }, ref) => <figure ref={ref} className={className} {...props} />
+  ({ className, ...props }, ref) => <figure ref={ref} className={cn("", className)} {...props} />
 )
 CardFigure.displayName = "CardFigure"
 
 // ==========================================
-// 3. CardBody (テキストエリアの余白管理)
+// 3. CardBody
+// ★ cva()() の書き方をやめ、cn("card-body", className) に統一
+// これでPaddingが消失するバグが直ります
 // ==========================================
 export const CardBody = React.forwardRef<HTMLDivElement, React.ComponentPropsWithRef<"div">>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cva("card-body")({ className })} {...props} />
+    <div ref={ref} className={cn("card-body", className)} {...props} />
   )
 )
 CardBody.displayName = "CardBody"
 
 // ==========================================
-// 4. CardTitle (タイトルのスタイル管理)
+// 4. CardTitle
 // ==========================================
 export const CardTitle = React.forwardRef<HTMLHeadingElement, React.ComponentPropsWithRef<"h2">>(
   ({ className, ...props }, ref) => (
-    <h2 ref={ref} className={cva("card-title")({ className })} {...props} />
+    <h2 ref={ref} className={cn("card-title", className)} {...props} />
   )
 )
 CardTitle.displayName = "CardTitle"
 
 // ==========================================
-// 5. CardActions (ボタンなどを置くエリア)
+// 5. CardActions
 // ==========================================
 export const CardActions = React.forwardRef<HTMLDivElement, React.ComponentPropsWithRef<"div">>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cva("card-actions justify-end")({ className })} {...props} />
+    <div ref={ref} className={cn("card-actions justify-end", className)} {...props} />
   )
 )
 CardActions.displayName = "CardActions"

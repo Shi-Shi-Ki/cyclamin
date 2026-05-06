@@ -2,6 +2,8 @@ import type { Metadata } from "next"
 import localFont from "next/font/local"
 import "./globals.css"
 import { ThemeProvider } from "@repo/ui/organisms/ThemeProvider"
+import { NavigatorBar } from "@repo/ui/organisms/NavigatorBar"
+import { Sidebar } from "@repo/ui/organisms/Sidebar"
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,7 +36,21 @@ export default function RootLayout({
             dark: "dracula",
           }}
         >
-          {children}
+          <div className="drawer">
+            <input id="app-drawer" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content flex flex-col min-h-screen">
+              <NavigatorBar />
+              <main className="flex-1">{children}</main>
+            </div>
+            <div className="drawer-side z-50">
+              <label
+                htmlFor="app-drawer"
+                aria-label="close sidebar"
+                className="drawer-overlay"
+              ></label>
+              <Sidebar />
+            </div>
+          </div>
         </ThemeProvider>
       </body>
     </html>

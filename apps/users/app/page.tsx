@@ -1,92 +1,162 @@
-import Image, { type ImageProps } from "next/image"
-import styles from "./page.module.css"
-import { ThemeToggle } from "@repo/ui/organisms/ThemeToggle"
-import Button from "@repo/ui/atoms/Button"
-import Progress from "@repo/ui/atoms/Progress"
+// apps/users/app/dashboard/page.tsx
 
-type Props = Omit<ImageProps, "src"> & {
-  srcLight: string
-  srcDark: string
-}
+import { Container } from "@repo/ui/organisms/Container"
+import { Section } from "@repo/ui/organisms/Section"
+import { Card, CardFigure, CardBody, CardTitle, CardActions } from "@repo/ui/molecules/Card"
+import { Badge } from "@repo/ui/atoms/Badge"
+import { Button } from "@repo/ui/atoms/Button"
+import { PlayCircle, AlertCircle, Clock, BookOpen } from "lucide-react"
 
-const ThemeImage = (props: Props) => {
-  const { srcLight, srcDark, ...rest } = props
-
+export default function DashboardPage() {
   return (
-    <>
-      <Image {...rest} src={srcLight} className="imgLight" />
-      <Image {...rest} src={srcDark} className="imgDark" />
-    </>
-  )
-}
+    <main className="min-h-screen bg-base-200/30 pb-12">
+      {/* ページヘッダー */}
+      <div className="bg-base-100 border-b pb-6 pt-8">
+        <Container>
+          <h1 className="text-3xl font-bold">ダッシュボード</h1>
+          <p className="text-base-content/70 mt-2">
+            お疲れ様です。現在の学習タスクと進捗を確認しましょう。
+          </p>
+        </Container>
+      </div>
 
-export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <ThemeImage
-          className={styles.logo}
-          srcLight="turborepo-dark.svg"
-          srcDark="turborepo-light.svg"
-          alt="Turborepo logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>apps/web/app/page.tsx</code>
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+      <Container>
+        {/* ==========================================
+            セクション1: ヒーローエリア（続きから再開）
+            一番目立つ場所に、現在進行中のタスクを配置します
+        ========================================== */}
+        <Section className="pt-8">
+          <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+            <PlayCircle className="text-primary w-6 h-6" />
+            学習を再開する
+          </h2>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new/clone?demo-description=Learn+to+implement+a+monorepo+with+a+two+Next.js+sites+that+has+installed+three+local+packages.&demo-image=%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F4K8ZISWAzJ8X1504ca0zmC%2F0b21a1c6246add355e55816278ef54bc%2FBasic.png&demo-title=Monorepo+with+Turborepo&demo-url=https%3A%2F%2Fexamples-basic-web.vercel.sh%2F&from=templates&project-name=Monorepo+with+Turborepo&repository-name=monorepo-turborepo&repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fturborepo%2Ftree%2Fmain%2Fexamples%2Fbasic&root-directory=apps%2Fdocs&skippable-integrations=1&teamSlug=vercel&utm_source=create-turbo"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://turborepo.dev/docs?utm_source"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-        <ThemeToggle />
-        <Button color={"accent"}>dummy button</Button>
-        <Progress max={100} value={50} />
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com/templates?search=turborepo&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image aria-hidden src="/window.svg" alt="Window icon" width={16} height={16} />
-          Examples
-        </a>
-        <a
-          href="https://turborepo.dev?utm_source=create-turbo"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image aria-hidden src="/globe.svg" alt="Globe icon" width={16} height={16} />
-          Go to turborepo.dev →
-        </a>
-      </footer>
-    </div>
+          {/* Cardの layout="side" を使って横長のレイアウトを実現 */}
+          <Card layout="side" className="w-full bg-base-100 shadow-sm border border-base-200">
+            <CardFigure className="w-1/3 min-w-[240px] hidden sm:block relative">
+              <img
+                src="https://picsum.photos/seed/security/600/400"
+                alt="情報セキュリティ基礎講座"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </CardFigure>
+            <CardBody>
+              <div className="flex justify-between items-start">
+                <Badge className="bg-blue-100 text-blue-700 border-blue-200">進行中</Badge>
+                <span className="text-sm text-base-content/60 flex items-center gap-1">
+                  <Clock className="w-4 h-4" /> 残り約15分
+                </span>
+              </div>
+
+              <CardTitle className="text-2xl mt-2">情報セキュリティ基礎講座 2026</CardTitle>
+              <p className="text-base-content/70 mt-1">第3章：標的型攻撃メールの手口と対策</p>
+
+              <div className="mt-6">
+                <div className="flex justify-between text-sm mb-2">
+                  <span className="font-medium">全体の進捗</span>
+                  <span className="font-bold text-primary">75%</span>
+                </div>
+                {/* 以前に型定義した progress 要素 */}
+                <progress className="progress progress-primary w-full" value={75} max={100} />
+              </div>
+
+              <CardActions className="mt-6">
+                <Button color="primary" className="w-full sm:w-auto">
+                  <PlayCircle className="w-5 h-5 mr-1" /> 動画を再生
+                </Button>
+              </CardActions>
+            </CardBody>
+          </Card>
+        </Section>
+
+        {/* ==========================================
+            セクション2: アラートエリア（期限間近の必須研修）
+            赤色を基調にして、受講漏れを防ぎます
+        ========================================== */}
+        <Section>
+          <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-error">
+            <AlertCircle className="w-6 h-6" />
+            期限間近の必須タスク
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <Card className="bg-error/5 shadow-sm border border-error/30 relative overflow-hidden">
+              {/* カード上部の赤い装飾ライン */}
+              <div className="absolute top-0 left-0 w-full h-1 bg-error"></div>
+              <CardBody>
+                <div className="flex gap-2 mb-2">
+                  <Badge color="error">必須</Badge>
+                  <Badge className="bg-error/20 text-error border-none">期限: 明日</Badge>
+                </div>
+                <CardTitle className="text-lg">【年次】コンプライアンス研修</CardTitle>
+                <p className="text-sm text-base-content/70 mt-2">
+                  全社員対象の年次テストです。期限内に必ず完了してください。
+                </p>
+                <CardActions className="mt-4">
+                  <Button color="error" size="sm" className="w-full">
+                    いますぐ受講する
+                  </Button>
+                </CardActions>
+              </CardBody>
+            </Card>
+          </div>
+        </Section>
+
+        {/* ==========================================
+            セクション3: 割り当てられた研修（To Do）
+            グリッド形式で未着手のものを並べます
+        ========================================== */}
+        <Section>
+          <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+            <BookOpen className="text-base-content/70 w-6 h-6" />
+            未着手のコース
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* サンプルカード 1 */}
+            <Card className="bg-base-100 shadow-sm hover:shadow-md transition-shadow border border-base-200">
+              <CardFigure className="relative w-full aspect-video">
+                <img
+                  src="https://picsum.photos/seed/management/400/225"
+                  alt="マネジメント研修"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              </CardFigure>
+              <CardBody className="p-5">
+                <Badge color="ghost" className="bg-base-200 w-fit mb-2">
+                  マネジメント
+                </Badge>
+                <CardTitle className="text-lg">新任マネージャー向け 基礎講座</CardTitle>
+                <div className="mt-4 text-sm text-base-content/60 flex items-center gap-4">
+                  <span className="flex items-center gap-1">
+                    <Clock className="w-4 h-4" /> 2時間30分
+                  </span>
+                  <span>全12レクチャー</span>
+                </div>
+              </CardBody>
+            </Card>
+
+            {/* サンプルカード 2 */}
+            <Card className="bg-base-100 shadow-sm hover:shadow-md transition-shadow border border-base-200">
+              <CardFigure>
+                <img src="https://picsum.photos/seed/excel/400/225" alt="Excel研修" />
+              </CardFigure>
+              <CardBody className="p-5">
+                <Badge color="ghost" className="bg-base-200 w-fit mb-2">
+                  実務スキル
+                </Badge>
+                <CardTitle className="text-lg">業務効率化のためのExcelマクロ入門</CardTitle>
+                <div className="mt-4 text-sm text-base-content/60 flex items-center gap-4">
+                  <span className="flex items-center gap-1">
+                    <Clock className="w-4 h-4" /> 1時間15分
+                  </span>
+                  <span>全5レクチャー</span>
+                </div>
+              </CardBody>
+            </Card>
+          </div>
+        </Section>
+      </Container>
+    </main>
   )
 }

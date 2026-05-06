@@ -25,20 +25,18 @@ const variants = cva("badge", {
 })
 
 export interface IBadge
-  extends Omit<React.ComponentPropsWithRef<"div">, "color">, VariantProps<typeof variants> {
-  label: string
-}
+  extends Omit<React.ComponentPropsWithRef<"div">, "color">, VariantProps<typeof variants> {}
 
-export const Button = React.forwardRef<HTMLDivElement, IBadge>(
-  ({ label, className, color, size, ...props }, ref) => {
+export const Badge = React.forwardRef<HTMLDivElement, IBadge>(
+  ({ children, className, color, size, ...props }, ref) => {
     return (
       <div ref={ref} className={variants({ color, size, className })} {...props}>
-        {label}
+        {children}
       </div>
     )
   }
 )
 
-Button.displayName = "Button"
+Badge.displayName = "Badge"
 
-export default Button
+export default Badge
