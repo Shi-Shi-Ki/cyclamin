@@ -7,7 +7,7 @@ interface ICheckbox
   extends
     Omit<React.ComponentPropsWithRef<"input">, "color" | "size">,
     VariantProps<typeof variants> {
-  hintText?: string
+  hintText?: React.ReactNode
   errorMessage?: string
 }
 
@@ -52,11 +52,6 @@ const Checkbox = forwardRef<HTMLInputElement, ICheckbox>(
           // 4. color と size が抜けた純粋な HTML 属性だけが ...props として展開される
           {...props}
         />
-        {errorMessage ? (
-          <p className="label text-error">{errorMessage}</p>
-        ) : (
-          <p className="label">&nbsp;</p>
-        )}
       </fieldset>
     )
   }

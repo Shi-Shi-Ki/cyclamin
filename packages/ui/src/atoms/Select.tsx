@@ -8,7 +8,7 @@ interface ISelect
     Omit<React.ComponentPropsWithRef<"select">, "color" | "size">,
     VariantProps<typeof variants> {
   options: { element: string; value: string; disabled?: boolean }[]
-  hintText?: string
+  hintText?: React.ReactNode
   errorMessage?: string
 }
 
@@ -54,11 +54,6 @@ const Select = forwardRef<HTMLSelectElement, ISelect>(
             </option>
           ))}
         </select>
-        {errorMessage ? (
-          <p className="label text-error">{errorMessage}</p>
-        ) : (
-          <p className="label">&nbsp;</p>
-        )}
       </fieldset>
     )
   }

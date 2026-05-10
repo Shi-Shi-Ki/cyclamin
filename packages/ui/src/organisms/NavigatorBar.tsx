@@ -17,7 +17,9 @@ export const NavigatorBar = () => {
           <Menu className="w-5 h-5" />
         </label>
         {/* ロゴやシステム名（リンクにするとより実用的です） */}
-        <a className="btn btn-ghost text-xl ml-2">LMS Portal</a>
+        <a className="btn btn-ghost text-xl ml-2">
+          LMS <span className="text-secondary ml-1">Portal</span>
+        </a>
       </div>
 
       {/* --- 中央（今回は空ですが、検索窓などを置くのによく使います） --- */}

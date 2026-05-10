@@ -7,7 +7,7 @@ interface ITextArea
   extends
     Omit<React.ComponentPropsWithRef<"textarea">, "color" | "size">,
     VariantProps<typeof variants> {
-  hintText?: string
+  hintText?: React.ReactNode
   errorMessage?: string
 }
 
@@ -44,11 +44,6 @@ const TextArea = forwardRef<HTMLTextAreaElement, ITextArea>(
           className={variants({ color: resolvedColor, size, className })}
           {...props}
         />
-        {errorMessage ? (
-          <p className="label text-error">{errorMessage}</p>
-        ) : (
-          <p className="label">&nbsp;</p>
-        )}
       </fieldset>
     )
   }
