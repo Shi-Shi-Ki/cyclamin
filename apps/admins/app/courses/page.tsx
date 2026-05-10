@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { courseSchema, type CourseFormInputs } from "../../schema/courses/schema"
@@ -21,11 +22,13 @@ import {
   BookOpen,
   ChartNoAxesCombined,
   Asterisk,
+  Trash2,
 } from "lucide-react"
 import Link from "next/link"
 import TextInput from "@repo/ui/atoms/TextInput"
 
 export default function AdminCourseSummaryPage() {
+  const router = useRouter()
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const {
@@ -46,6 +49,8 @@ export default function AdminCourseSummaryPage() {
     console.log("送信データ:", data)
     alert("コースを作成しました！")
     onClose(false)
+    const dummyId = 999 // dummy_id
+    router.push(`/courses/${dummyId}/edit`)
   }
 
   return (
@@ -141,21 +146,26 @@ export default function AdminCourseSummaryPage() {
               </div>
             </div>
 
-            <CardActions className="mt-2">
-              <Link href="/courses/1/edit">
-                <Button color="ghost" size="sm">
-                  コースの編集
-                </Button>
-              </Link>
-              <Link href="/courses/2/assign">
-                <Button color="ghost" size="sm">
-                  受講者の編集
-                </Button>
-              </Link>
-              {/* 先ほど作成した「進捗・成績トラッキングページ」への動線 */}
-              <Button color="primary" size="sm">
-                個別進捗を確認 <ChevronRight className="w-4 h-4 ml-1" />
+            <CardActions className="mt-2 flex justify-between items-center w-full">
+              <Button color="ghost" size="sm" className="text-error hover:bg-error/10 btn-square">
+                <Trash2 className="w-4 h-4" />
               </Button>
+              <div className="flex gap-2">
+                <Link href="/courses/1/edit">
+                  <Button color="ghost" size="sm">
+                    コースの編集
+                  </Button>
+                </Link>
+                <Link href="/courses/2/assign">
+                  <Button color="ghost" size="sm">
+                    受講者の編集
+                  </Button>
+                </Link>
+                {/* 先ほど作成した「進捗・成績トラッキングページ」への動線 */}
+                <Button color="primary" size="sm">
+                  個別進捗を確認 <ChevronRight className="w-4 h-4 ml-1" />
+                </Button>
+              </div>
             </CardActions>
           </CardBody>
         </Card>
@@ -188,20 +198,25 @@ export default function AdminCourseSummaryPage() {
               </div>
             </div>
 
-            <CardActions className="mt-2">
-              <Link href="/courses/2/edit">
-                <Button color="ghost" size="sm">
-                  コースの編集
-                </Button>
-              </Link>
-              <Link href="/courses/2/assign">
-                <Button color="ghost" size="sm">
-                  受講者の編集
-                </Button>
-              </Link>
-              <Button color="primary" size="sm">
-                個別進捗を確認 <ChevronRight className="w-4 h-4 ml-1" />
+            <CardActions className="mt-2 flex justify-between items-center w-full">
+              <Button color="ghost" size="sm" className="text-error hover:bg-error/10 btn-square">
+                <Trash2 className="w-4 h-4" />
               </Button>
+              <div className="flex gap-2">
+                <Link href="/courses/2/edit">
+                  <Button color="ghost" size="sm">
+                    コースの編集
+                  </Button>
+                </Link>
+                <Link href="/courses/2/assign">
+                  <Button color="ghost" size="sm">
+                    受講者の編集
+                  </Button>
+                </Link>
+                <Button color="primary" size="sm">
+                  個別進捗を確認 <ChevronRight className="w-4 h-4 ml-1" />
+                </Button>
+              </div>
             </CardActions>
           </CardBody>
         </Card>
