@@ -1,20 +1,8 @@
 "use client"
 
 import * as React from "react"
-import { useState } from "react"
 import { Button } from "@repo/ui/atoms/Button"
-import {
-  ArrowLeft,
-  Save,
-  Video,
-  FileText,
-  HelpCircle,
-  GripVertical,
-  Plus,
-  Trash2,
-  Edit3,
-  MonitorPlay,
-} from "lucide-react"
+import { ArrowLeft, Save, Plus, Trash2 } from "lucide-react"
 import { Container } from "@repo/ui/organisms/Container"
 import Link from "next/link"
 import { CurriculumBuilder } from "./_components/SortableLectureList"

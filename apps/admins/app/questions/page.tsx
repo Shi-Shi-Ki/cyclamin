@@ -185,7 +185,7 @@ export default function QuestionsPage() {
                 山田 太郎 <time>今日 10:24</time>
               </div>
               {/* 長文でも読みやすいように、吹き出しにプロース(文章)スタイルを当てる */}
-              <div className="chat-bubble chat-bubble-primary text-primary-content text-sm leading-relaxed max-w-[80%]">
+              <div className="chat-bubble chat-bubble-secondary text-secondary-content text-sm leading-relaxed max-w-[80%]">
                 お疲れ様です。
                 <br />
                 <br />
