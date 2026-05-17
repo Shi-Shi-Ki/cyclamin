@@ -32,9 +32,11 @@ export default function CourseBuilderPage() {
           <Button color="ghost" size="sm" className="text-error hover:bg-error/10 mr-4">
             <Trash2 className="w-4 h-4 mr-1.5" /> コースを削除
           </Button>
-          <Button color="ghost" className="text-primary">
-            プレビュー
-          </Button>
+          <Link href="/courses/999/preview">
+            <Button color="ghost" className="text-primary">
+              プレビュー
+            </Button>
+          </Link>
           <Button className="bg-primary/10 text-primary border-none hover:bg-primary/20">
             <Save className="w-4 h-4 mr-2" /> 下書き保存
           </Button>

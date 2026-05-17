@@ -23,6 +23,10 @@
   },
   "dependencies": {
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "survey-core": "^2.5.24",
+    "survey-creator-core": "^2.5.24",
+    "survey-creator-react": "^2.5.24",
+    "survey-react-ui": "^2.5.24"
   }
 }

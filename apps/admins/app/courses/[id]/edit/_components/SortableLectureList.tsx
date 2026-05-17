@@ -30,6 +30,7 @@ import {
   MonitorPlay,
 } from "lucide-react"
 import { Button } from "@repo/ui/atoms/Button"
+import Link from "next/link"
 
 // ==========================================
 // 1. データ型と初期データ
@@ -140,9 +141,17 @@ function SortableLectureItem({ lecture, sectionId }: { lecture: Lecture; section
         </div>
       </div>
       <div className="hidden group-hover:flex items-center gap-2">
-        <Button size="sm" color="ghost">
-          編集
-        </Button>
+        {lecture.type == "test" ? (
+          <Link href="/courses/1/edit/question" target="_blank">
+            <Button size="sm" color="ghost">
+              編集
+            </Button>
+          </Link>
+        ) : (
+          <Button size="sm" color="ghost">
+            編集
+          </Button>
+        )}
         <Button size="sm" color="ghost" className="btn-square text-error">
           <Trash2 className="w-4 h-4" />
         </Button>

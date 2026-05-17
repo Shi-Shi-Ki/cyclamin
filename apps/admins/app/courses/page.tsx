@@ -161,10 +161,11 @@ export default function AdminCourseSummaryPage() {
                     受講者の編集
                   </Button>
                 </Link>
-                {/* 先ほど作成した「進捗・成績トラッキングページ」への動線 */}
-                <Button color="primary" size="sm">
-                  個別進捗を確認 <ChevronRight className="w-4 h-4 ml-1" />
-                </Button>
+                <Link href="/progress">
+                  <Button color="primary" size="sm">
+                    個別進捗を確認 <ChevronRight className="w-4 h-4 ml-1" />
+                  </Button>
+                </Link>
               </div>
             </CardActions>
           </CardBody>
@@ -213,9 +214,11 @@ export default function AdminCourseSummaryPage() {
                     受講者の編集
                   </Button>
                 </Link>
-                <Button color="primary" size="sm">
-                  個別進捗を確認 <ChevronRight className="w-4 h-4 ml-1" />
-                </Button>
+                <Link href="/progress">
+                  <Button color="primary" size="sm">
+                    個別進捗を確認 <ChevronRight className="w-4 h-4 ml-1" />
+                  </Button>
+                </Link>
               </div>
             </CardActions>
           </CardBody>
