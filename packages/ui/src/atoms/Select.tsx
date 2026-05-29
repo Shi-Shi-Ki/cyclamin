@@ -3,7 +3,7 @@
 import { forwardRef, Ref } from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
-interface ISelect
+export interface ISelect
   extends
     Omit<React.ComponentPropsWithRef<"select">, "color" | "size">,
     VariantProps<typeof variants> {
@@ -33,7 +33,7 @@ const variants = cva("select", {
   },
 })
 
-const Select = forwardRef<HTMLSelectElement, ISelect>(
+export const Select = forwardRef<HTMLSelectElement, ISelect>(
   (
     { options, hintText, errorMessage, className, color, size, ...props },
     ref: Ref<HTMLSelectElement>
@@ -60,5 +60,3 @@ const Select = forwardRef<HTMLSelectElement, ISelect>(
 )
 
 Select.displayName = Select.name
-
-export default Select

@@ -2,7 +2,7 @@
 
 import React from "react"
 import { useEffect, useRef } from "react"
-import Button from "../atoms/Button"
+import { Button } from "../atoms/Button"
 import { X } from "lucide-react"
 
 export interface IModal extends React.ComponentPropsWithRef<"dialog"> {
@@ -67,5 +67,3 @@ export const Modal = React.forwardRef<HTMLDialogElement, IModal>(
 )
 
 Modal.displayName = "Modal"
-
-export default Modal

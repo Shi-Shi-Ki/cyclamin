@@ -9,4 +9,6 @@ export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
   return <NextThemesProvider {...props}>{children}</NextThemesProvider>
 }
 
+ThemeProvider.displayName = "ThemeProvider"
+
 export { useTheme } from "next-themes"

@@ -39,5 +39,3 @@ export const Progress = React.forwardRef<HTMLProgressElement, IProgress>(
 )
 
 Progress.displayName = "Progress"
-
-export default Progress

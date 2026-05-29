@@ -12,7 +12,7 @@ import {
   Users,
   MessageCircleMore,
 } from "lucide-react"
-import { ThemeToggle } from "@repo/ui/organisms/ThemeToggle"
+import { ThemeToggle } from "@repo/ui"
 
 // ★ メニューを配列化しておくと、管理が劇的にラクになります
 const MENU_ITEMS = [

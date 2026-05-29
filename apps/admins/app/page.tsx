@@ -1,6 +1,5 @@
 import * as React from "react"
-import { Container } from "@repo/ui/organisms/Container"
-import { Button } from "@repo/ui/atoms/Button"
+import { Container, Button } from "@repo/ui"
 import { AlertCircle, Plus, Mail, Download, ChevronRight, MessageSquare, Clock } from "lucide-react"
 
 export default function AdminDashboardPage() {

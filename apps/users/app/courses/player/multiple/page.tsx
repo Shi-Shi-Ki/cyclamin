@@ -1,6 +1,6 @@
 "use client"
 
-import { CoursePlayerTemplate } from "@repo/ui/templates/CoursePlayerTemplate"
+import { CoursePlayerTemplate } from "@repo/ui"
 
 export default function UserPlayerPage() {
   // ※将来的にはここで DB からコースデータを取得する

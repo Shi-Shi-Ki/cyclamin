@@ -39,5 +39,3 @@ export const Badge = React.forwardRef<HTMLDivElement, IBadge>(
 )
 
 Badge.displayName = "Badge"
-
-export default Badge

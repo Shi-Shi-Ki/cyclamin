@@ -1,8 +1,6 @@
 import * as React from "react"
-import { Button } from "@repo/ui/atoms/Button"
-import { Badge } from "@repo/ui/atoms/Badge"
+import { Button, Badge, Container } from "@repo/ui"
 import { Search, Mail, Download, MoreHorizontal } from "lucide-react"
-import Container from "@repo/ui/organisms/Container"
 
 export default function ProgressTrackingPage() {
   return (

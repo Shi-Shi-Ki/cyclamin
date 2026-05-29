@@ -82,3 +82,5 @@ export const NavigatorBar = () => {
     </header>
   )
 }
+
+NavigatorBar.displayName = "NavigatorBar"

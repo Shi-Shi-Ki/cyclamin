@@ -41,5 +41,3 @@ export const Status = React.forwardRef<HTMLDivElement, IStatus>(
 )
 
 Status.displayName = "Status"
-
-export default Status

@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
 import "./globals.css"
-import { ThemeProvider } from "@repo/ui/organisms/ThemeProvider"
+import { ThemeProvider } from "@repo/ui"
 import { AdminShell } from "./AdminShell"
 
 const geistSans = localFont({

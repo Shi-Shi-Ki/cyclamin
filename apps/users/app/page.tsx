@@ -1,10 +1,16 @@
 import Image from "next/image"
-import { Container } from "@repo/ui/organisms/Container"
-import { Section } from "@repo/ui/organisms/Section"
-import { Card, CardFigure, CardBody, CardTitle, CardActions } from "@repo/ui/molecules/Card"
-import { Badge } from "@repo/ui/atoms/Badge"
-import { Button } from "@repo/ui/atoms/Button"
-import { Accordion } from "@repo/ui/atoms/Accordion"
+import {
+  Accordion,
+  Container,
+  Section,
+  Card,
+  CardFigure,
+  CardBody,
+  CardTitle,
+  CardActions,
+  Badge,
+  Button,
+} from "@repo/ui"
 import { PlayCircle, AlertCircle, Clock, BookOpen, CheckCircle2 } from "lucide-react"
 
 export default function DashboardPage() {

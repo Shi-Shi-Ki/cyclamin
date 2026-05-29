@@ -16,23 +16,27 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@repo/ui": "workspace:*",
     "cyclamin": "workspace:*",
-    "lucide-react": "^1.14.0",
-    "next": "16.2.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "lucide-react": "catalog:",
+    "next": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/tailwind-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@tailwindcss/postcss": "^4.2.4",
-    "@types/node": "^22.15.3",
-    "@types/react": "19.2.2",
-    "@types/react-dom": "19.2.2",
+    "@hookform/resolvers": "catalog:",
+    "react-hook-form": "catalog:",
+    "@tailwindcss/postcss": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
     "autoprefixer": "^10.5.0",
-    "eslint": "^9.39.1",
-    "postcss": "^8.5.13",
-    "tailwindcss": "^4.2.4",
-    "typescript": "5.9.2"
+    "eslint": "catalog:",
+    "postcss": "catalog:",
+    "prettier": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:"
   }
 }

@@ -41,3 +41,5 @@ export const ThemeToggle = () => {
     </Button>
   )
 }
+
+ThemeToggle.displayName = "ThemeToggle"

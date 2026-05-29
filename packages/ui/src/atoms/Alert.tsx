@@ -32,5 +32,3 @@ export const Alert = React.forwardRef<HTMLDivElement, IAlert>(
 )
 
 Alert.displayName = "Alert"
-
-export default Alert

@@ -28,6 +28,7 @@
     "eslint": "^9.39.1",
     "lucide-react": "^1.14.0",
     "postcss": "^8.5.13",
+    "prettier": "catalog:",
     "tailwindcss": "^4.2.4",
     "typescript": "5.9.2"
   }

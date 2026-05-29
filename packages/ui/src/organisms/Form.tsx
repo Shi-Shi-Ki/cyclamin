@@ -12,5 +12,3 @@ export const Form = React.forwardRef<HTMLFormElement, IForm>(({ children, ...pro
   )
 })
 Form.displayName = "Form"
-
-export default Form

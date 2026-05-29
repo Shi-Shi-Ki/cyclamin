@@ -3,7 +3,7 @@
 import { forwardRef, Ref } from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
-interface ITextArea
+export interface ITextArea
   extends
     Omit<React.ComponentPropsWithRef<"textarea">, "color" | "size">,
     VariantProps<typeof variants> {
@@ -32,7 +32,7 @@ const variants = cva("textarea", {
   },
 })
 
-const TextArea = forwardRef<HTMLTextAreaElement, ITextArea>(
+export const TextArea = forwardRef<HTMLTextAreaElement, ITextArea>(
   ({ hintText, errorMessage, className, color, size, ...props }, ref: Ref<HTMLTextAreaElement>) => {
     const resolvedColor = errorMessage ? "error" : color
 
@@ -50,5 +50,3 @@ const TextArea = forwardRef<HTMLTextAreaElement, ITextArea>(
 )
 
 TextArea.displayName = TextArea.name
-
-export default TextArea

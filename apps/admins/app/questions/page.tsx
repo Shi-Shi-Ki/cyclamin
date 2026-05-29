@@ -2,9 +2,7 @@
 
 import * as React from "react"
 import { useState } from "react"
-import { Button } from "@repo/ui/atoms/Button"
-import { Badge } from "@repo/ui/atoms/Badge"
-import { Container } from "@repo/ui/organisms/Container"
+import { Button, Badge, Container } from "@repo/ui"
 import {
   Search,
   Filter,

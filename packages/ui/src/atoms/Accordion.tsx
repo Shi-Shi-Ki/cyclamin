@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { cn } from "../../../common/util"
+import { cn } from "../../../common/src/util"
 
 export interface IAccordion extends React.ComponentPropsWithRef<"details"> {
   summary: React.ReactNode
@@ -25,5 +25,3 @@ export const Accordion = React.forwardRef<HTMLDetailsElement, IAccordion>(
 )
 
 Accordion.displayName = "Accordion"
-
-export default Accordion

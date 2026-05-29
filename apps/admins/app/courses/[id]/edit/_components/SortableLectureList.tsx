@@ -29,7 +29,7 @@ import {
   Plus,
   MonitorPlay,
 } from "lucide-react"
-import { Button } from "@repo/ui/atoms/Button"
+import { Button } from "@repo/ui"
 import Link from "next/link"
 
 // ==========================================

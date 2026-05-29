@@ -6,13 +6,20 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { courseSchema, type CourseFormInputs } from "../../schema/courses/schema"
-import { Container } from "@repo/ui/organisms/Container"
-import { Card, CardBody, CardTitle, CardActions } from "@repo/ui/molecules/Card"
-import { Badge } from "@repo/ui/atoms/Badge"
-import { Button } from "@repo/ui/atoms/Button"
-import { Modal } from "@repo/ui/organisms/Modal"
-import { Form } from "@repo/ui/organisms/Form"
-import { Validation } from "@repo/ui/organisms/Validation"
+import {
+  Badge,
+  Button,
+  Modal,
+  Form,
+  Validation,
+  Container,
+  Card,
+  CardBody,
+  CardTitle,
+  CardActions,
+  TextInput,
+  SuggestionInput,
+} from "@repo/ui"
 import {
   Users,
   BarChart,
@@ -25,20 +32,26 @@ import {
   Trash2,
 } from "lucide-react"
 import Link from "next/link"
-import TextInput from "@repo/ui/atoms/TextInput"
 
 export default function AdminCourseSummaryPage() {
   const router = useRouter()
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [apiSuggestions, setApiSuggestions] = useState<{ id: string; value: string }[]>([])
+  const [isSearching, setIsSearching] = useState(false)
 
   const {
     register,
     formState: { errors },
     handleSubmit,
     reset,
+    setValue,
+    watch,
   } = useForm<CourseFormInputs>({
     resolver: zodResolver(courseSchema),
   })
+  // 入力監視設定
+  // const courseNameValue = watch("courseName")
+  const sourceCourseNameValue = watch("sourceCourseName")
 
   const onClose = (isStateAction: boolean) => {
     setIsModalOpen(isStateAction)
@@ -52,6 +65,54 @@ export default function AdminCourseSummaryPage() {
     const dummyId = 999 // dummy_id
     router.push(`/courses/${dummyId}/edit`)
   }
+
+  // ★ ディバウンス＆APIフェッチ処理
+  React.useEffect(() => {
+    // 入力が空の場合はAPIを叩かずリストをクリア
+    if (!sourceCourseNameValue || sourceCourseNameValue.length === 0) {
+      setApiSuggestions([])
+      return
+    }
+
+    setIsSearching(true)
+
+    // setTimeoutでAPI呼び出しを遅延させる（300ms）
+    const delayDebounceFn = setTimeout(async () => {
+      try {
+        console.log(`APIリクエスト送信: GET /api/courses/search?q=${sourceCourseNameValue}`)
+
+        // 【本番環境のイメージ】
+        // const response = await fetch(`/api/courses/search?q=${encodeURIComponent(sourceCourseNameValue)}&limit=5`)
+        // const data = await response.json()
+        // setApiSuggestions(data.map(item => item.name))
+
+        // ※モック動作: 0.5秒後にダミーデータを返す
+        await new Promise((resolve) => setTimeout(resolve, 500))
+        const mockDb = [
+          { id: "101", value: "【年次】コンプライアンス研修" },
+          { id: "102", value: "【年次】情報セキュリティ研修" },
+          { id: "201", value: "【新入社員】ビジネスマナー研修" },
+          { id: "301", value: "【中途】評価制度理解" },
+          { id: "501", value: "マネジメント基礎研修" },
+        ]
+        setApiSuggestions(mockDb.filter((c) => c.value.includes(sourceCourseNameValue)))
+      } catch (error) {
+        console.error("検索エラー:", error)
+      } finally {
+        setIsSearching(false)
+      }
+    }, 300) // 300ミリ秒間、次の入力がなければAPIを発火
+
+    // ユーザーが300ms以内に次の文字を入力したら、前回のsetTimeoutをキャンセルする
+    return () => clearTimeout(delayDebounceFn)
+  }, [sourceCourseNameValue])
+
+  // 候補が見つからない状態を判定する定数
+  const isNoResults =
+    sourceCourseNameValue &&
+    sourceCourseNameValue.length > 0 &&
+    !isSearching &&
+    apiSuggestions.length === 0
 
   return (
     <Container className="max-w-6xl py-8">
@@ -251,7 +312,7 @@ export default function AdminCourseSummaryPage() {
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-4"
         >
-          <div className="form-control">
+          <div className="form-control bg-base-200/50 p-4 rounded-box border border-base-200">
             <Validation message={errors.courseName?.message}>
               <TextInput
                 {...register("courseName")}
@@ -262,11 +323,53 @@ export default function AdminCourseSummaryPage() {
                     <span className="label-text font-bold">コース名</span>
                   </>
                 }
-                className={`input-bordered w-full`}
+                className={"input-bordered w-full"}
                 color={`${errors.courseName ? "error" : "primary"}`}
                 placeholder="例: 【年次】コンプライアンス研修"
               />
             </Validation>
+          </div>
+          <div className="divider my-0" />
+          <div className="form-control bg-base-200/50 p-4 rounded-box border border-base-200">
+            <Validation message={isNoResults ? "候補が見つかりません" : ""} status="warning">
+              <SuggestionInput
+                label={
+                  <>
+                    <span className="label-text font-bold">
+                      既存のコースをコピーして作成する（任意）
+                    </span>
+                  </>
+                }
+                TextInputComponent={TextInput}
+                ButtonComponent={Button}
+                suggestions={apiSuggestions}
+                isLoading={isSearching}
+                textInputProps={{
+                  className: "input-bordered w-full",
+                  placeholder: "過去のコースを検索...",
+                }}
+                buttonInputProps={{
+                  className: "hover:bg-default hover:text-default-content",
+                  color: "ghost",
+                }}
+                enteredValue={sourceCourseNameValue || ""}
+                onChange={(val) => setValue("sourceCourseName", val, { shouldValidate: true })}
+                onSelect={(selectedItem) => {
+                  // 見た目上の名前をセット
+                  setValue("sourceCourseName", selectedItem.value)
+                  // ★ バックエンド送信用にIDをセット！
+                  setValue("sourceCourseId", selectedItem.id)
+                  // 自動入力（新規コース名が空の場合、コピーして使う場合において名前を変えて使う場合が考えられるので入力補助）
+                  const courseNameValue = watch("courseName")
+                  if (!courseNameValue) {
+                    setValue("courseName", selectedItem.value, { shouldValidate: true })
+                  }
+                }}
+              />
+            </Validation>
+            <p className="text-xs text-base-content/60 mt-2 ml-1">
+              ※選択すると、設問内容や設定がすべて引き継がれます。
+            </p>
           </div>
         </Form>
       </Modal>

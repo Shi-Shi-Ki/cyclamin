@@ -11,15 +11,13 @@ const variants = cva("skeleton", {
   },
 })
 
-export interface ISkelton
+export interface ISkeleton
   extends Omit<React.ComponentPropsWithRef<"div">, "color">, VariantProps<typeof variants> {}
 
-export const Skelton = React.forwardRef<HTMLDivElement, ISkelton>(
+export const Skeleton = React.forwardRef<HTMLDivElement, ISkeleton>(
   ({ className, type, ...props }, ref) => {
     return <div ref={ref} className={variants({ type, className })} {...props} />
   }
 )
 
-Skelton.displayName = "Skelton"
-
-export default Skelton
+Skeleton.displayName = "Skeleton"

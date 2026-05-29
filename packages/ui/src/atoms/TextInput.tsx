@@ -3,7 +3,7 @@
 import { forwardRef, Ref } from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
-interface ITextInput
+export interface ITextInput
   extends
     Omit<React.ComponentPropsWithRef<"input">, "color" | "size">,
     VariantProps<typeof variants> {
@@ -32,7 +32,7 @@ const variants = cva("input", {
   },
 })
 
-const TextInput = forwardRef<HTMLInputElement, ITextInput>(
+export const TextInput = forwardRef<HTMLInputElement, ITextInput>(
   ({ hintText, errorMessage, className, color, size, ...props }, ref: Ref<HTMLInputElement>) => {
     // 2. エラーメッセージがある場合は、強制的に color を "error" に上書きする小技
     const resolvedColor = errorMessage ? "error" : color
@@ -53,5 +53,3 @@ const TextInput = forwardRef<HTMLInputElement, ITextInput>(
 )
 
 TextInput.displayName = TextInput.name
-
-export default TextInput

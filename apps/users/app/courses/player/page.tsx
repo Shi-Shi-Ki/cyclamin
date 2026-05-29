@@ -1,10 +1,7 @@
 // apps/users/app/courses/player/page.tsx
 
 import * as React from "react"
-// ★ 以下のインポートパスはご自身の環境に合わせて調整してください
-import { Container } from "@repo/ui/organisms/Container"
-import { Button } from "@repo/ui/atoms/Button"
-import { Badge } from "@repo/ui/atoms/Badge"
+import { Container, Button, Badge } from "@repo/ui"
 import { CheckCircle2, PlayCircle, FileText, ChevronRight, CheckSquare } from "lucide-react"
 
 export default function CoursePlayerPage() {

@@ -9,13 +9,41 @@ import "survey-creator-core/survey-creator-core.min.css"
 import "survey-core/survey.i18n"
 import "survey-creator-core/survey-creator-core.i18n"
 
-export default function SurveyCreatorWidget() {
+// ==========================================
+// ★ 1. 許可する設問タイプのホワイトリストを定義
+// ==========================================
+const ALLOWED_QUESTION_TYPES = [
+  "text",
+  "tagbox",
+  "boolean",
+  "checkbox",
+  "rating",
+  "radiogroup",
+  "slider",
+  "dropdown",
+  "comment",
+]
+
+export const SurveyCreatorWidget = () => {
   const creator = useMemo(() => {
     const options = {
       showLogicTab: true,
       isAutoSave: false,
     }
     const newCreator = new SurveyCreator(options)
+
+    // ==========================================
+    // ★ 2. ツールボックスから未対応の設問を隠す
+    // ==========================================
+    // ツールボックス内の全アイテムの名前リストを安全に取得
+    const existingItems = newCreator.toolbox.items.map((item) => item.name)
+
+    // ホワイトリストに存在しないアイテムを削除
+    existingItems.forEach((itemName) => {
+      if (!ALLOWED_QUESTION_TYPES.includes(itemName)) {
+        newCreator.toolbox.removeItem(itemName)
+      }
+    })
 
     // 日本語化
     newCreator.locale = "ja"
@@ -100,3 +128,5 @@ export default function SurveyCreatorWidget() {
     </div>
   )
 }
+
+SurveyCreatorWidget.displayName = "SurveyCreatorWidget"

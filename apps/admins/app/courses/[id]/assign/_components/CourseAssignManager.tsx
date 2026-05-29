@@ -5,9 +5,7 @@
 import * as React from "react"
 import { useState, useMemo } from "react"
 import { Building2, User, Search, Check, Plus, X, Users } from "lucide-react"
-import { Button } from "@repo/ui/atoms/Button"
-import { Badge } from "@repo/ui/atoms/Badge"
-import { Modal } from "@repo/ui/organisms/Modal" // ★ 作成済みのModalをインポート
+import { Button, Badge, Modal } from "@repo/ui"
 
 // --- 型定義 ---
 export type Individual = { id: string; name: string; dept: string; initial: string }

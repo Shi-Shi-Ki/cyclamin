@@ -36,3 +36,5 @@ export const Sidebar = () => {
     </ul>
   )
 }
+
+Sidebar.displayName = "Sidebar"

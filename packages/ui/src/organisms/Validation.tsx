@@ -49,4 +49,4 @@ export const Validation = ({ children, message, status = "none" }: ValidationPro
   )
 }
 
-export default Validation
+Validation.displayName = "Validation"

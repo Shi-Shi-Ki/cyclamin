@@ -35,5 +35,3 @@ export const Tooltip = React.forwardRef<HTMLDivElement, ITooltip>(
 )
 
 Tooltip.displayName = "Tooltip"
-
-export default Tooltip

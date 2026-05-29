@@ -1,7 +1,7 @@
 "use client"
 
 import { forwardRef } from "react"
-import { cn } from "../../../common/util"
+import { cn } from "../../../common/src/util"
 
 export type IContainer = React.ComponentPropsWithRef<"div">
 
@@ -20,5 +20,3 @@ export const Container = forwardRef<HTMLDivElement, IContainer>(
   }
 )
 Container.displayName = "Container"
-
-export default Container

@@ -1,8 +1,8 @@
 "use client"
 
 import { useState, useMemo, useEffect } from "react"
-import { Button } from "@repo/ui/atoms/Button"
-import { Badge } from "@repo/ui/atoms/Badge"
+import { Badge } from "../atoms/Badge"
+import { Button } from "../atoms/Button"
 import { HelpCircle, Send, List, FileText, CheckSquare, PlayCircle } from "lucide-react"
 
 // ==========================================
@@ -176,7 +176,7 @@ const mockSurveyJson = {
   videoUrl: "dQw4w9WgXcQ",
 }
 
-interface CoursePlayerTemplateProps {
+export interface CoursePlayerTemplateProps {
   courseTitle?: string
   isPreview?: boolean
 }
@@ -399,3 +399,5 @@ export const CoursePlayerTemplate = ({
     </main>
   )
 }
+
+CoursePlayerTemplate.displayName = "CoursePlayerTemplate"

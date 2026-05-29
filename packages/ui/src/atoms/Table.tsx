@@ -47,5 +47,3 @@ export function Table<T>({ data, columns, wrapperClassName = "" }: ITable<T>) {
 }
 
 Table.displayName = "Table"
-
-export default Table

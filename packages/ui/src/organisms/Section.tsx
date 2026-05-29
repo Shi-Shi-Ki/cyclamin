@@ -1,7 +1,7 @@
 "use client"
 
 import { forwardRef } from "react"
-import { cn } from "../../../common/util"
+import { cn } from "../../../common/src/util"
 
 export type ISection = React.ComponentPropsWithRef<"section">
 
@@ -19,6 +19,5 @@ export const Section = forwardRef<HTMLElement, ISection>(
     )
   }
 )
-Section.displayName = "Section"
 
-export default Section
+Section.displayName = "Section"

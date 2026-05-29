@@ -32,5 +32,3 @@ export const Toast = React.forwardRef<HTMLDivElement, IToast>(
 )
 
 Toast.displayName = "Toast"
-
-export default Toast

@@ -3,7 +3,7 @@
 import { forwardRef, Ref } from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
-interface ICheckbox
+export interface ICheckbox
   extends
     Omit<React.ComponentPropsWithRef<"input">, "color" | "size">,
     VariantProps<typeof variants> {
@@ -32,7 +32,7 @@ const variants = cva("checkbox", {
   },
 })
 
-const Checkbox = forwardRef<HTMLInputElement, ICheckbox>(
+export const Checkbox = forwardRef<HTMLInputElement, ICheckbox>(
   (
     // 1. ここで color と size を props から抜き出す（分離する）
     { hintText, errorMessage, className, color, size, ...props },
@@ -58,5 +58,3 @@ const Checkbox = forwardRef<HTMLInputElement, ICheckbox>(
 )
 
 Checkbox.displayName = Checkbox.name
-
-export default Checkbox
