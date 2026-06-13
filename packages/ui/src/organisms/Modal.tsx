@@ -1,9 +1,9 @@
 "use client"
 
-import React from "react"
-import { useEffect, useRef } from "react"
+import React, { useEffect, useRef } from "react"
 import { Button } from "../atoms/Button"
 import { X } from "lucide-react"
+import { cn } from "../../../common/src/util"
 
 export interface IModal extends React.ComponentPropsWithRef<"dialog"> {
   isOpen: boolean
@@ -11,11 +11,12 @@ export interface IModal extends React.ComponentPropsWithRef<"dialog"> {
   onClose: () => void
   isOutSideClose?: boolean
   title?: string
+  titleStyle?: string
   actions?: React.ReactNode
 }
 
 export const Modal = React.forwardRef<HTMLDialogElement, IModal>(
-  ({ isOpen, children, onClose, isOutSideClose, title, actions }, ref) => {
+  ({ isOpen, children, onClose, isOutSideClose, title, titleStyle, actions }, ref) => {
     const dialogRef = useRef<HTMLDialogElement>(null)
 
     // 内部のRefを、外部から渡ってきたforwardedRefにも連携する（Reactの標準機能）
@@ -51,7 +52,7 @@ export const Modal = React.forwardRef<HTMLDialogElement, IModal>(
           >
             <X />
           </Button>
-          {title && <h3 className="font-bold text-lg">{title}</h3>}
+          {title && <h3 className={cn(titleStyle ?? "font-bold text-lg")}>{title}</h3>}
           {children}
           {actions && <div className="modal-action">{actions}</div>}
         </div>

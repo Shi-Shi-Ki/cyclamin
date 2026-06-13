@@ -17,10 +17,15 @@ const variants = cva("btn", {
       md: "btn-md",
       lg: "btn-lg",
     },
+    buttonType: {
+      square: "square",
+      circle: "circle",
+    },
   },
   defaultVariants: {
     color: "primary",
     size: "md",
+    buttonType: "square",
   },
 })
 
@@ -28,8 +33,10 @@ export interface IButton
   extends Omit<React.ComponentPropsWithRef<"button">, "color">, VariantProps<typeof variants> {}
 
 export const Button = React.forwardRef<HTMLButtonElement, IButton>(
-  ({ className, color, size, ...props }, ref) => {
-    return <button ref={ref} className={variants({ color, size, className })} {...props} />
+  ({ className, color, size, buttonType, ...props }, ref) => {
+    return (
+      <button ref={ref} className={variants({ color, size, buttonType, className })} {...props} />
+    )
   }
 )
 

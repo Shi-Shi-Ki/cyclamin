@@ -36,3 +36,6 @@ export {
   type CoursePlayerTemplateProps,
 } from "./templates/CoursePlayerTemplate"
 export { SurveyCreatorWidget } from "./templates/SurveyCreatorWidget"
+
+export { ConfirmModalProvider, useConfirmModal } from "./providers/ConfirmModalProvider"
+export { ErrorModalProvider, useErrorModal } from "./providers/ErrorModalProvider"

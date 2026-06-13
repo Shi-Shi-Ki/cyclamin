@@ -1,15 +1,12 @@
-// apps/admins/app/courses/[id]/assign/_components/CourseAssignManager.tsx
-
 "use client"
 
 import * as React from "react"
 import { useState, useMemo } from "react"
 import { Building2, User, Search, Check, Plus, X, Users } from "lucide-react"
 import { Button, Badge, Modal } from "@repo/ui"
-
-// --- 型定義 ---
-export type Individual = { id: string; name: string; dept: string; initial: string }
-export type Group = { id: string; name: string; count: number; members?: Individual[] }
+import { AssignListItem } from "./AssignListItem"
+import { Group, Individual } from "../_types/type"
+import { GroupMemberSelectModal } from "./GroupMemberSelectModal"
 
 // --- モックデータ（500人規模を想定して数名追加） ---
 const AVAILABLE_USERS: Individual[] = [
@@ -78,13 +75,6 @@ export function CourseAssignManager() {
   const handleRemoveUser = (id: string) =>
     setSelectedUsers((prev) => prev.filter((u) => u.id !== id))
 
-  // モーダル内で表示するメンバー（検索フィルタリング）
-  const filteredModalMembers = useMemo(() => {
-    if (!activeModalGroup?.members) return []
-    if (!modalSearchText) return activeModalGroup.members
-    return activeModalGroup.members.filter((m) => m.name.includes(modalSearchText))
-  }, [activeModalGroup, modalSearchText])
-
   return (
     <div className="space-y-6">
       {/* 1. サマリーヘッダー */}
@@ -106,7 +96,7 @@ export function CourseAssignManager() {
       {/* 2. メインコンテンツ（左右分割） */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
         {/* 左側：検索・セレクター */}
-        <div className="bg-base-100 rounded-box shadow-sm border border-base-200 overflow-hidden flex flex-col h-[600px]">
+        <div className="bg-base-100 rounded-box shadow-sm border border-base-200 overflow-hidden flex flex-col h-150">
           <div className="flex border-b border-base-200 bg-base-200/30">
             <TabButton
               active={searchMode === "group"}
@@ -136,105 +126,35 @@ export function CourseAssignManager() {
           <div className="flex-1 overflow-y-auto p-2 flex flex-col gap-1">
             {searchMode === "group"
               ? AVAILABLE_GROUPS.map((group) => {
-                  const isGroupAdded = selectedGroups.some((g) => g.id === group.id)
-                  const hasMembers = group.members && group.members.length > 0
-
                   return (
-                    <div
+                    <AssignListItem
                       key={group.id}
-                      className={`flex items-center justify-between p-3 rounded-lg border transition-colors ${isGroupAdded ? "bg-primary/5 border-primary/20" : "hover:bg-base-200/50 border-transparent group"}`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <Building2
-                          className={`w-5 h-5 ${isGroupAdded ? "text-primary" : "text-base-content/40"}`}
-                        />
-                        <div>
-                          <div className="font-bold text-sm">{group.name}</div>
-                          <div className="text-xs text-base-content/50">
-                            約 {group.count.toLocaleString()}名
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        {/* ★ アコーディオンの代わりに、モーダルを開くボタンを設置 */}
-                        {hasMembers && (
-                          <Button
-                            size="sm"
-                            color="ghost"
-                            onClick={() => {
-                              setActiveModalGroup(group)
-                              setModalSearchText("")
-                            }}
-                            className="h-8 min-h-0 text-xs text-base-content/70"
-                          >
-                            <Users className="w-3 h-3 mr-1" /> メンバーから選ぶ
-                          </Button>
-                        )}
-
-                        {isGroupAdded ? (
-                          <span className="text-xs font-bold text-primary flex items-center gap-1 w-20 justify-end">
-                            <Check className="w-4 h-4" /> 追加済み
-                          </span>
-                        ) : (
-                          <Button
-                            size="sm"
-                            color="ghost"
-                            onClick={() => handleAddGroup(group)}
-                            className="text-primary border border-primary hover:bg-primary hover:text-white h-8 min-h-0 w-20 opacity-0 group-hover:opacity-100 transition-opacity"
-                          >
-                            <Plus className="w-4 h-4 mr-1" /> 追加
-                          </Button>
-                        )}
-                      </div>
-                    </div>
+                      item={group}
+                      selectedItems={selectedGroups}
+                      onSelectMember={() => {
+                        setActiveModalGroup(group)
+                        setModalSearchText("")
+                      }}
+                      onAdd={() => handleAddGroup(group)}
+                    />
                   )
                 })
               : /* 個人モードの描画 */
                 AVAILABLE_USERS.map((user) => {
-                  const isUserAdded = selectedUsers.some((u) => u.id === user.id)
                   return (
-                    <div
+                    <AssignListItem
                       key={user.id}
-                      className={`flex items-center justify-between p-2 rounded-lg border ${isUserAdded ? "bg-primary/5 border-primary/20" : "hover:bg-base-200/50 border-transparent"}`}
-                    >
-                      {/* ... 個人リストの描画（以前と同じなので省略） ... */}
-                      <div className="flex items-center gap-3">
-                        <div className="avatar placeholder">
-                          <div
-                            className={`w-8 rounded-full text-xs ${isUserAdded ? "bg-primary text-primary-content" : "bg-neutral text-neutral-content"}`}
-                          >
-                            {user.initial}
-                          </div>
-                        </div>
-                        <div>
-                          <div className="font-bold text-sm">{user.name}</div>
-                          <div className="text-xs text-base-content/50">{user.dept}</div>
-                        </div>
-                      </div>
-                      {isUserAdded ? (
-                        <span className="text-xs font-bold text-primary flex items-center gap-1">
-                          <Check className="w-4 h-4" /> 追加済み
-                        </span>
-                      ) : (
-                        <Button
-                          size="sm"
-                          color="ghost"
-                          onClick={() => handleAddUser(user)}
-                          className="text-primary border border-primary hover:bg-primary hover:text-white"
-                        >
-                          <Plus className="w-4 h-4 mr-1" /> 追加
-                        </Button>
-                      )}
-                    </div>
+                      item={user}
+                      selectedItems={selectedUsers}
+                      onAdd={() => handleAddUser(user)}
+                    />
                   )
                 })}
           </div>
         </div>
 
-        {/* 右側：確定リスト（カート） ※変更なし */}
-        <div className="bg-base-100 rounded-box shadow-sm border border-base-200 overflow-hidden flex flex-col h-[600px]">
-          {/* ... 右側パネルの中身は以前と同じなので省略 ... */}
+        {/* 右側：確定リスト */}
+        <div className="bg-base-100 rounded-box shadow-sm border border-base-200 overflow-hidden flex flex-col h-150">
           <div className="p-4 border-b border-base-200 bg-base-200/20 flex items-center justify-between">
             <h3 className="font-bold flex items-center gap-2">
               <Check className="w-5 h-5 text-success" /> アサイン確定リスト
@@ -301,92 +221,16 @@ export function CourseAssignManager() {
       {/* ====================================================
           ★ グループメンバー選択モーダル
       ==================================================== */}
-      <Modal
-        isOpen={activeModalGroup !== null}
+      <GroupMemberSelectModal
         onClose={() => setActiveModalGroup(null)}
-        isOutSideClose={true}
-        title={`${activeModalGroup?.name} のメンバー`}
-      >
-        <div className="flex flex-col h-[500px] -mx-6 -mb-6 mt-4 border-t border-base-200">
-          {/* モーダル内検索バー固定 */}
-          <div className="p-4 border-b border-base-200 bg-base-100 shrink-0">
-            <div className="relative">
-              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-base-content/50" />
-              <input
-                type="text"
-                placeholder="氏名で絞り込み..."
-                value={modalSearchText}
-                onChange={(e) => setModalSearchText(e.target.value)}
-                className="input input-sm input-bordered w-full pl-9 bg-base-100"
-              />
-            </div>
-          </div>
-
-          {/* モーダル内メンバーリスト（スクロール） */}
-          <div className="flex-1 overflow-y-auto p-4 bg-base-200/30">
-            <div className="flex flex-col gap-2">
-              {filteredModalMembers.length === 0 ? (
-                <div className="text-center text-sm text-base-content/50 py-10">
-                  該当するメンバーが見つかりません。
-                </div>
-              ) : (
-                filteredModalMembers.map((user) => {
-                  const isUserAdded = selectedUsers.some((u) => u.id === user.id)
-                  const isParentGroupAdded = selectedGroups.some(
-                    (g) => g.id === activeModalGroup?.id
-                  )
-
-                  return (
-                    <div
-                      key={user.id}
-                      className={`flex items-center justify-between p-2 rounded-lg border bg-base-100 transition-colors ${isUserAdded ? "border-primary/30" : "border-base-200"}`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="avatar placeholder">
-                          <div
-                            className={`w-8 rounded-full text-xs ${isUserAdded || isParentGroupAdded ? "bg-primary text-primary-content" : "bg-neutral text-neutral-content"}`}
-                          >
-                            {user.initial}
-                          </div>
-                        </div>
-                        <div>
-                          <div className="font-bold text-sm">{user.name}</div>
-                          <div className="text-xs text-base-content/50">{user.dept}</div>
-                        </div>
-                      </div>
-
-                      {/* ステータスとアクションの切り替え */}
-                      {isParentGroupAdded ? (
-                        <span className="text-xs text-base-content/50 px-2">
-                          部署として追加済み
-                        </span>
-                      ) : isUserAdded ? (
-                        <Button
-                          size="sm"
-                          color="ghost"
-                          onClick={() => handleRemoveUser(user.id)}
-                          className="text-primary hover:bg-error/10 hover:text-error hover:border-error border border-primary w-24 h-8 min-h-0"
-                        >
-                          追加済み
-                        </Button>
-                      ) : (
-                        <Button
-                          size="sm"
-                          color="ghost"
-                          onClick={() => handleAddUser(user)}
-                          className="text-base-content/70 hover:text-primary hover:bg-primary/10 w-24 h-8 min-h-0"
-                        >
-                          追加
-                        </Button>
-                      )}
-                    </div>
-                  )
-                })
-              )}
-            </div>
-          </div>
-        </div>
-      </Modal>
+        activeModalGroup={activeModalGroup}
+        modalSearchText={modalSearchText}
+        onChange={(e) => setModalSearchText(e.target.value)}
+        selectedUsers={selectedUsers}
+        selectedGroups={selectedGroups}
+        handleRemoveUser={handleRemoveUser}
+        handleAddUser={handleAddUser}
+      />
     </div>
   )
 }

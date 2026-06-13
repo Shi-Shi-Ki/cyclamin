@@ -4,7 +4,31 @@ import * as React from "react"
 import { Button, Container } from "@repo/ui"
 import { ArrowLeft, Save, Plus, Trash2 } from "lucide-react"
 import Link from "next/link"
-import { CurriculumBuilder } from "./_components/SortableLectureList"
+import { CurriculumBuilder } from "./_components/curriculumBuilder/CurriculumBuilder"
+import { Section } from "./_components/types/schema"
+
+const INITIAL_SECTIONS: Section[] = [
+  {
+    id: "sec-1",
+    title: "第1章：評価制度について",
+    lectures: [
+      { id: "lec-1", title: "STEP0. 評価制度理解（動画）", type: "video", typeLabel: "動画のみ" },
+      {
+        id: "lec-2",
+        title: "理解度テスト（全5問）",
+        type: "test",
+        typeLabel: "テスト / アンケート",
+      },
+    ],
+  },
+  {
+    id: "sec-2",
+    title: "第2章：マネージャーの役割",
+    lectures: [
+      { id: "lec-3", title: "STEP1. 目標設定の基本", type: "mixed", typeLabel: "動画 + テスト" },
+    ],
+  },
+]
 
 export default function CourseBuilderPage() {
   return (
@@ -60,7 +84,7 @@ export default function CourseBuilderPage() {
           </Button>
         </div>
 
-        <CurriculumBuilder />
+        <CurriculumBuilder sectionRecodes={INITIAL_SECTIONS} />
       </div>
     </Container>
   )
