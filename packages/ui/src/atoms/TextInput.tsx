@@ -19,6 +19,7 @@ const variants = cva("input", {
       accent: "input-accent",
       error: "input-error",
       ghost: "input-ghost",
+      neutral: "input-neutral",
     },
     size: {
       sm: "input-sm",

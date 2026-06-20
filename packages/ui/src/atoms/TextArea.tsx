@@ -19,6 +19,7 @@ const variants = cva("textarea", {
       accent: "textarea-accent",
       error: "textarea-error",
       ghost: "textarea-ghost",
+      neutral: "textarea-neutral",
     },
     size: {
       sm: "textarea-sm",

@@ -9,6 +9,8 @@ const variants = cva("progress", {
       primary: "progress-primary",
       secondary: "progress-secondary",
       accent: "progress-accent",
+      success: "progress-success",
+      warning: "progress-warning",
       error: "progress-error",
       ghost: "progress-ghost",
     },

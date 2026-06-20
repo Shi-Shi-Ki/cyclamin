@@ -20,6 +20,7 @@ const variants = cva("select", {
       accent: "select-accent",
       error: "select-error",
       ghost: "select-ghost",
+      neutral: "select-neutral",
     },
     size: {
       sm: "select-sm",

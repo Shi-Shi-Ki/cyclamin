@@ -2,8 +2,8 @@
 
 import * as React from "react"
 import { useState, useMemo } from "react"
-import { Building2, User, Search, Check, Plus, X, Users } from "lucide-react"
-import { Button, Badge, Modal } from "@repo/ui"
+import { Building2, User, Search, Check, X, Users } from "lucide-react"
+import { Button, Badge } from "@repo/ui"
 import { AssignListItem } from "./AssignListItem"
 import { Group, Individual } from "../_types/type"
 import { GroupMemberSelectModal } from "./GroupMemberSelectModal"

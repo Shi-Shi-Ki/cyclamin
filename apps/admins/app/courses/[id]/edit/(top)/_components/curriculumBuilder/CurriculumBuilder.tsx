@@ -1,6 +1,6 @@
 "use client"
 
-import { useId, useState } from "react"
+import { useId, useState, useEffect } from "react"
 import {
   DndContext,
   closestCenter,
@@ -20,15 +20,18 @@ import { SortableSectionItem } from "./SortableSectionItem"
 import { Section } from "../types/schema"
 
 interface ICurriculumBuilder {
-  sectionRecodes: Section[]
+  sections: Section[] // ★ 親から受け取る
+  setSections: React.Dispatch<React.SetStateAction<Section[]>> // ★ 親から受け取る
 }
 
 // ==========================================
 // 4. 大元：カリキュラムビルダー全体
 // ==========================================
-export const CurriculumBuilder = ({ sectionRecodes }: ICurriculumBuilder) => {
+export const CurriculumBuilder = ({ sections, setSections }: ICurriculumBuilder) => {
   const dndId = useId()
-  const [sections, setSections] = useState<Section[]>(sectionRecodes)
+
+  // ★ ポイント3: 現在編集中のセクションIDを管理する
+  const [editingSectionId, setEditingSectionId] = useState<string | null>(null)
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
@@ -72,6 +75,40 @@ export const CurriculumBuilder = ({ sectionRecodes }: ICurriculumBuilder) => {
     }
   }
 
+  // ★ ポイント4: セクション追加時に自動で編集モードにする
+  useEffect(() => {
+    // タイトルが空のセクションがあったら、それを編集モードにする
+    const newSection = sections.find((s) => s.title === "")
+    if (newSection) {
+      setEditingSectionId(newSection.id)
+    }
+  }, [sections])
+
+  // ★ ポイント5: 編集・保存・キャンセル・削除のコールバック
+
+  // 編集開始
+  const handleEditSection = (sectionId: string) => {
+    setEditingSectionId(sectionId)
+  }
+
+  // 編集内容（タイトル）の保存
+  const handleSaveSectionTitle = (sectionId: string, newTitle: string) => {
+    setSections((prev) =>
+      prev.map((sec) => (sec.id === sectionId ? { ...sec, title: newTitle } : sec))
+    )
+    setEditingSectionId(null) // 編集モード終了
+  }
+
+  // 編集キャンセル
+  const handleCancelEdit = () => {
+    setEditingSectionId(null) // 編集モード終了
+  }
+
+  // セクションの削除
+  const handleDeleteSection = (sectionId: string) => {
+    setSections((prev) => prev.filter((sec) => sec.id !== sectionId))
+  }
+
   return (
     <DndContext
       id={dndId}
@@ -80,9 +117,17 @@ export const CurriculumBuilder = ({ sectionRecodes }: ICurriculumBuilder) => {
       onDragEnd={handleDragEnd}
     >
       <SortableContext items={sections.map((s) => s.id)} strategy={verticalListSortingStrategy}>
-        <div>
+        <div className="space-y-6">
           {sections.map((section) => (
-            <SortableSectionItem key={section.id} section={section} />
+            <SortableSectionItem
+              key={section.id}
+              section={section}
+              isEditing={section.id === editingSectionId} // ★ 編集モードかどうかを渡す
+              onEdit={handleEditSection} // ★ コールバックを渡す
+              onSaveEdit={handleSaveSectionTitle} // ★ コールバックを渡す
+              onCancelEdit={handleCancelEdit} // ★ コールバックを渡す
+              onDelete={handleDeleteSection} // ★ コールバックを渡す
+            />
           ))}
         </div>
       </SortableContext>

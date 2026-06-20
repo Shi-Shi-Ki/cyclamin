@@ -14,7 +14,7 @@ export const AppendLectureButtonList = () => {
         </div>
         <ul
           tabIndex={0}
-          className="dropdown-content z-[10] menu p-2 shadow-lg bg-base-100 rounded-box w-56 border border-base-200 mt-1"
+          className="dropdown-content z-10 menu p-2 shadow-lg bg-base-100 rounded-box w-56 border border-base-200 mt-1"
         >
           <li className="menu-title text-xs py-2">レイアウトタイプを選択</li>
           <li>
