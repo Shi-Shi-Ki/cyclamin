@@ -1,0 +1,35 @@
+{
+  "name": "@repo/ui",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "devDependencies": {
+    "@repo/common": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "class-variance-authority": "catalog:",
+    "clsx": "catalog:",
+    "lucide-react": "catalog:",
+    "prettier": "catalog:",
+    "tailwind-merge": "catalog:",
+    "typescript": "catalog:"
+  },
+  "dependencies": {
+    "@react-oauth/google": "catalog:",
+    "next": "catalog:",
+    "next-themes": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "survey-core": "catalog:",
+    "survey-creator-core": "catalog:",
+    "survey-creator-react": "catalog:",
+    "survey-react-ui": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "tailwindcss": "catalog:",
+    "daisyui": "catalog:"
+  }
+}
