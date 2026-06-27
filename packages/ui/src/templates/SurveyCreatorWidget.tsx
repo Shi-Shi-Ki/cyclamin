@@ -1,17 +1,19 @@
-// app/components/SurveyCreatorWidget.tsx
-"use client" // クライアントコンポーネントとしてマーク
+"use client"
 
-import React, { useMemo } from "react"
+import React, { useMemo, useEffect } from "react"
+import { useTheme } from "next-themes"
+
 import { SurveyCreatorComponent, SurveyCreator } from "survey-creator-react"
 import { Serializer } from "survey-core"
+
+// ★ 1. ユーザー様が見つけた公式テーマをインポート！
+import { LayeredDarkPanelless, LayeredLightPanelless } from "survey-core/themes"
+
 import "survey-core/survey-core.min.css"
 import "survey-creator-core/survey-creator-core.min.css"
 import "survey-core/survey.i18n"
 import "survey-creator-core/survey-creator-core.i18n"
 
-// ==========================================
-// ★ 1. 許可する設問タイプのホワイトリストを定義
-// ==========================================
 const ALLOWED_QUESTION_TYPES = [
   "text",
   "tagbox",
@@ -25,6 +27,8 @@ const ALLOWED_QUESTION_TYPES = [
 ]
 
 export const SurveyCreatorWidget = () => {
+  const { resolvedTheme } = useTheme()
+
   const creator = useMemo(() => {
     const options = {
       showLogicTab: true,
@@ -32,71 +36,37 @@ export const SurveyCreatorWidget = () => {
     }
     const newCreator = new SurveyCreator(options)
 
-    // ==========================================
-    // ★ 2. ツールボックスから未対応の設問を隠す
-    // ==========================================
-    // ツールボックス内の全アイテムの名前リストを安全に取得
     const existingItems = newCreator.toolbox.items.map((item) => item.name)
-
-    // ホワイトリストに存在しないアイテムを削除
     existingItems.forEach((itemName) => {
       if (!ALLOWED_QUESTION_TYPES.includes(itemName)) {
         newCreator.toolbox.removeItem(itemName)
       }
     })
 
-    // 日本語化
     newCreator.locale = "ja"
+    newCreator.JSON = { ...JSON.parse(newCreator.text || "{}"), locale: "ja" }
 
-    // ついでに、新しく作るアンケート自体のデフォルト言語も日本語にしておく
-    // (これがないと、受講者画面のエラーメッセージが英語のままになることがあります)
-    newCreator.JSON = {
-      ...JSON.parse(newCreator.text || "{}"),
-      locale: "ja",
-    }
-
-    // エディタのメニュー追加
-    // SurveyJSの仕様でdefaultと同じ値はjsonには出力しない
     Serializer.addProperty("survey", {
       name: "videoUrl",
       type: "string",
       category: "general",
       displayName: "研修動画ID (YouTube)",
-      //   default: "dQw4w9WgXcQ",
     })
 
-    // プレビュー画面のカスタマイズ
     newCreator.onSurveyInstanceCreated.add((sender, options) => {
-      // options.reason (非推奨) の代わりに options.area を使用します
-      // プレビュータブが表示される時の area 名は "preview-tab" です
       if (options.area === "preview-tab") {
-        // プレビュー用のサーベイインスタンスから動画IDを取得
         const videoId = options.survey.videoUrl
-
         if (videoId) {
           const firstPage = options.survey.pages[0]
-
           if (firstPage) {
-            // 1. HTML設問のインスタンスを作成
             const videoQuestion = Serializer.createClass("html")
             videoQuestion.name = "preview_video_player"
             videoQuestion.html = `
               <div style="background: #000; padding: 20px; text-align: center; margin-bottom: 20px; border-radius: 8px;">
-                <h3 style="color: #fff; margin-bottom: 10px;">▼ 動画プレビュー (本番は左側に固定表示されます)</h3>
-                <iframe 
-                  width="560" 
-                  height="315" 
-                  src="https://www.youtube.com/embed/${videoId}" 
-                  title="YouTube video player" 
-                  frameBorder="0" 
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                  allowFullScreen>
-                </iframe>
+                <h3 style="color: #fff; margin-bottom: 10px;">▼ 動画プレビュー</h3>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameBorder="0" allowFullScreen></iframe>
               </div>
             `
-
-            // 2. 先頭（インデックス0）に挿入
-            // visibleIndexへの代入ではなく、addElementの第2引数で場所を指定します
             firstPage.addElement(videoQuestion, 0)
           }
         }
@@ -108,19 +78,26 @@ export const SurveyCreatorWidget = () => {
       newCreator.text = savedJson
     }
 
-    newCreator.saveSurveyFunc = (
-      saveNo: number,
-      callback: (no: number, isSuccess: boolean) => void
-    ) => {
-      const jsonString = newCreator.text
-      console.log("Saving to Mock DB (LocalStorage)...", jsonString)
-      localStorage.setItem("mock_survey_json", jsonString)
+    newCreator.saveSurveyFunc = (saveNo, callback) => {
+      localStorage.setItem("mock_survey_json", newCreator.text)
       callback(saveNo, true)
       alert("保存しました！受講者ページを確認してください。")
     }
 
     return newCreator
   }, [])
+
+  // ==========================================
+  // ★ 2. テーマの切り替えを監視して、公式の関数で適用する
+  // ==========================================
+  useEffect(() => {
+    // ユーザー様が見つけた `applyTheme` は、なんとエディタ本体（creator）にも使えます！
+    if (resolvedTheme === "dark") {
+      creator.applyTheme(LayeredDarkPanelless)
+    } else {
+      creator.applyTheme(LayeredLightPanelless)
+    }
+  }, [resolvedTheme, creator])
 
   return (
     <div style={{ height: "calc(100vh - 100px)" }}>

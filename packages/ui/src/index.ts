@@ -34,7 +34,7 @@ export { Validation, type ValidationStatus, type ValidationProps } from "./organ
 export {
   CoursePlayerTemplate,
   type CoursePlayerTemplateProps,
-} from "./templates/CoursePlayerTemplate"
+} from "./templates/course-player/CoursePlayerTemplate"
 export { SurveyCreatorWidget } from "./templates/SurveyCreatorWidget"
 
 export { ConfirmModalProvider, useConfirmModal } from "./providers/ConfirmModalProvider"
